@@ -89,6 +89,9 @@
 </head>
 <body>
   <div class="wrap">
+    <div id="fsHint" style="position:fixed;top:0;left:0;right:0;z-index:99;background:var(--ct-red);color:#fff;text-align:center;padding:1vh 0;font-size:1.1vw;font-weight:600;">
+      화면을 한 번 클릭(리모컨 확인)하면 전체화면으로 전환됩니다
+    </div>
     <header>
       <div class="brand">
         <div class="dot"></div>
@@ -157,6 +160,26 @@
   }
   tick();
   setInterval(tick, 1000 * 20);
+
+  // ── 전체화면 진입 (화면 클릭/리모컨 확인 시 주소창 숨김) ──
+  function goFullscreen(){
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (req) { try { req.call(el); } catch(e){} }
+    const hint = document.getElementById('fsHint');
+    if (hint) hint.style.display = 'none';
+  }
+  document.addEventListener('click', goFullscreen);
+  document.addEventListener('keydown', goFullscreen);
+  document.addEventListener('fullscreenchange', function(){
+    const hint = document.getElementById('fsHint');
+    if (hint && document.fullscreenElement) hint.style.display = 'none';
+  });
+  // 8초 뒤 안내 문구 자동 숨김
+  setTimeout(function(){
+    const hint = document.getElementById('fsHint');
+    if (hint) hint.style.display = 'none';
+  }, 8000);
 </script>
 </body>
 </html>
