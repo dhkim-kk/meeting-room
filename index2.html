@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회의실 이용 안내</title>
+<style>
+  :root {
+    --ct-red: #FF3D00;
+    --ct-red-soft: #E94B3C;
+    --bg: #0E0E10;
+    --card: #1A1A1E;
+    --line: #2A2A30;
+    --text: #F5F5F7;
+    --muted: #9A9AA2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3.2vh 4vw;
+  }
+  /* ── 헤더 (로고 + 시계) ── */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 2.4vh;
+    border-bottom: 3px solid var(--ct-red);
+  }
+  .brand { display: flex; align-items: center; gap: 1vw; }
+  .brand .dot {
+    width: 1.5vw; height: 1.5vw; min-width: 20px; min-height: 20px;
+    background: var(--ct-red); border-radius: 50%;
+  }
+  .brand .name { font-size: 2.4vw; font-weight: 800; letter-spacing: -0.5px; }
+  .brand .sub { font-size: 1.1vw; color: var(--muted); margin-top: 0.3vh; }
+  .clock { text-align: right; }
+  .clock .time { font-size: 4.2vw; font-weight: 800; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+  .clock .date { font-size: 1.3vw; color: var(--muted); margin-top: 0.6vh; }
+
+  /* ── 타이틀 ── */
+  .title-row { padding: 3vh 0 2vh; }
+  .title-row h1 { font-size: 3vw; font-weight: 800; letter-spacing: -1px; }
+  .title-row h1 span { color: var(--ct-red); }
+
+  /* ── 규칙 그리드 ── */
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 2vh 2vw;
+  }
+  .rule {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2.6vh 2vw;
+    display: flex;
+    align-items: center;
+    gap: 1.6vw;
+  }
+  .rule .num {
+    font-size: 2.6vw; font-weight: 800; color: var(--ct-red);
+    min-width: 3vw; font-variant-numeric: tabular-nums;
+  }
+  .rule .body .head { font-size: 1.7vw; font-weight: 700; margin-bottom: 0.5vh; }
+  .rule .body .desc { font-size: 1.15vw; color: var(--muted); line-height: 1.45; }
+
+  /* ── 푸터 ── */
+  footer {
+    padding-top: 2vh; margin-top: 2vh;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.05vw; color: var(--muted);
+  }
+  footer .notice b { color: var(--ct-red); font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <div class="name">CATCHTABLE</div>
+          <div class="sub">Meeting Room Guide</div>
+        </div>
+      </div>
+      <div class="clock">
+        <div class="time" id="time">00:00</div>
+        <div class="date" id="date">—</div>
+      </div>
+    </header>
+
+    <div class="title-row">
+      <h1>회의실 <span>이용 안내</span></h1>
+    </div>
+
+    <!-- ▼▼▼ 규칙 내용은 여기만 고치면 됩니다 ▼▼▼ -->
+    <div class="grid" id="grid">
+      <div class="rule">
+        <div class="num">01</div>
+        <div class="body">
+          <div class="head">예약 후 사용</div>
+          <div class="desc">캘린더/예약 시스템에 등록 후 이용해 주세요. 예약 없는 회의실은 언제든 다른 팀이 사용할 수 있습니다.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="num">02</div>
+        <div class="body">
+          <div class="head">종료 후 정리</div>
+          <div class="desc">화이트보드, 다과, 개인 물품은 회의 종료 시 정리해 주세요. 다음 사용자를 위한 배려입니다.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="num">03</div>
+        <div class="body">
+          <div class="head">시간 준수</div>
+          <div class="desc">예약 시간을 지켜주시고, 회의가 길어질 경우 연장 예약을 확인해 주세요.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="num">04</div>
+        <div class="body">
+          <div class="head">장비 사용</div>
+          <div class="desc">TV·화상회의 장비 사용 후 전원 및 연결을 원위치해 주세요. 고장 시 총무팀에 문의 바랍니다.</div>
+        </div>
+      </div>
+    </div>
+    <!-- ▲▲▲ 여기까지 ▲▲▲ -->
+
+    <footer>
+      <div class="notice">문의: <b>총무팀 / People팀</b></div>
+      <div>불편사항은 사내 채널로 알려주세요</div>
+    </footer>
+  </div>
+
+<script>
+  function pad(n){ return n < 10 ? '0'+n : n; }
+  function tick(){
+    const now = new Date();
+    document.getElementById('time').textContent = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    const days = ['일','월','화','수','목','금','토'];
+    document.getElementById('date').textContent =
+      now.getFullYear() + '.' + pad(now.getMonth()+1) + '.' + pad(now.getDate()) + ' (' + days[now.getDay()] + ')';
+  }
+  tick();
+  setInterval(tick, 1000 * 20);
+</script>
+</body>
+</html>
